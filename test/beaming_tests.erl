@@ -21,20 +21,63 @@
 
 functions_test() ->
     ?assertEqual(
-       [fun beaming:functions/1,
-        fun beaming:exports/1,
+       [fun beaming:abstract_code/1,
         fun beaming:export_all/1,
         fun beaming:export_all/2,
-        fun beaming:abstract_code/1],
-       beaming:functions(beaming)).
+        fun beaming:exports/1,
+        fun beaming:exports_mfa/1,
+        fun beaming:functions/1,
+        fun beaming:functions_mfa/1,
+        fun beaming:functions_tspec/1],
+       lists:sort(beaming:functions(beaming))).
+
+
+functions_mfa_test() ->
+    ?assertEqual(
+       [{beaming, abstract_code, 1},
+        {beaming, export_all, 1},
+        {beaming, export_all, 2},
+        {beaming, exports, 1},
+        {beaming, exports_mfa, 1},
+        {beaming, functions, 1},
+        {beaming, functions_mfa, 1},
+        {beaming, functions_tspec, 1}],
+       lists:sort(beaming:functions_mfa(beaming))).
+
+
+functions_tspec_test() ->
+    ?assertEqual(
+       [{beaming, abstract_code, '_'},
+        {beaming, export_all, '_'},
+        {beaming, export_all, '_'},
+        {beaming, exports, '_'},
+        {beaming, exports_mfa, '_'},
+        {beaming, functions, '_'},
+        {beaming, functions_mfa, '_'},
+        {beaming, functions_tspec, '_'}],
+       lists:sort(beaming:functions_tspec(beaming))).
 
 
 exports_test() ->
     ?assertEqual(
-       [fun beaming:functions/1,
+       [fun beaming:export_all/1,
         fun beaming:exports/1,
-        fun beaming:export_all/1],
-       beaming:exports(beaming)).
+        fun beaming:exports_mfa/1,
+        fun beaming:functions/1,
+        fun beaming:functions_mfa/1,
+        fun beaming:functions_tspec/1],
+       lists:sort(beaming:exports(beaming))).
+
+
+exports_mfa_test() ->
+    ?assertEqual(
+       [{beaming, export_all, 1},
+        {beaming, exports, 1},
+        {beaming, exports_mfa, 1},
+        {beaming, functions, 1},
+        {beaming, functions_mfa, 1},
+        {beaming, functions_tspec, 1}],
+       lists:sort(beaming:exports_mfa(beaming))).
 
 
 export_all_test() ->

@@ -18,19 +18,40 @@
 
 -export([export_all/1]).
 -export([exports/1]).
+-export([exports_mfa/1]).
 -export([functions/1]).
+-export([functions_mfa/1]).
+-export([functions_tspec/1]).
 
 
 %% @returns all functions in module
 -spec functions(module()) -> [function()].
 functions(M) ->
-    [fun M:F/A || {function, _, F, A, _} <- abstract_code(code:which(M))].
+    [fun M:F/A || {_, F, A} <- functions_mfa(M)].
+
+
+%% @returns all functions in module
+-spec functions_mfa(module()) -> [mfa()].
+functions_mfa(M) ->
+    [{M, F, A} || {function, _, F, A, _} <- abstract_code(code:which(M))].
+
+
+%% @returns all functions in module
+-spec functions_tspec(module()) -> [{module(), atom(), '_'}].
+functions_tspec(M) ->
+    [{M, F, '_'} || {_, F, _} <- functions_mfa(M)].
 
 
 %% @returns all exported functions in a module
 -spec exports(module()) -> [function()].
 exports(M) ->
-    [fun M:F/A || {F, A} <- M:module_info(exports), F /= module_info].
+    [fun M:F/A || {_, F, A} <- exports_mfa(M)].
+
+
+%% @returns all exported functions in a module
+-spec exports_mfa(module()) -> [mfa()].
+exports_mfa(M) ->
+    [{M, F, A} || {F, A} <- M:module_info(exports), F /= module_info].
 
 
 export_all(M) ->
