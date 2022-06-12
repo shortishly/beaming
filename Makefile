@@ -17,11 +17,6 @@ PROJECT = beaming
 
 RELX_TAR = 0
 
-BUILD_DEPS = elvis_mk
-DEP_PLUGINS = elvis_mk
-
-dep_elvis_mk = git https://github.com/inaka/elvis.mk.git 1.0.0
-
 PLT_APPS = \
 	compiler \
 	crypto \
@@ -33,4 +28,4 @@ PLT_APPS = \
 
 include erlang.mk
 
-all:: elvis dialyze eunit docs
+all:: dialyze eunit docs
