@@ -14,8 +14,7 @@
 # limitations under the License.
 #
 PROJECT = beaming
-
-RELX_TAR = 0
+PROJECT_VERSION = ${shell git describe --tags}
 
 PLT_APPS = \
 	compiler \
@@ -27,5 +26,3 @@ PLT_APPS = \
 	tools
 
 include erlang.mk
-
-all:: dialyze eunit docs
