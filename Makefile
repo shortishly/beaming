@@ -26,3 +26,6 @@ PLT_APPS = \
 	tools
 
 include erlang.mk
+
+
+app:: rebar.config

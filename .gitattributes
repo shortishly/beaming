@@ -1,2 +1,3 @@
+ebin/beaming.app -diff
 erlang.mk -diff
 rebar.config -diff
